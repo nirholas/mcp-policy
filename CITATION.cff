@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: If you use this software, please cite it as below.
+title: "@three-ws/mcp-policy"
+abstract: "The three.ws MCP tool policy: every tool's group and tier, read-only by default with opt-in financial groups, named confirm flags, and preview ids that must precede every irreversible call."
+version: 0.1.0
+license: Apache-2.0
+repository-code: "https://github.com/nirholas/mcp-policy"
+url: "https://three.ws"
+authors:
+  - name: three.ws
+    website: "https://three.ws"

@@ -1,0 +1,19 @@
+# @three-ws/mcp-policy
+
+> The three.ws MCP tool policy: every tool's group and tier, read-only by default with opt-in financial groups, named confirm flags, and preview ids that must precede every irreversible call.
+
+@three-ws/mcp-policy is a JavaScript library from three.ws. Install: `npm install @three-ws/mcp-policy`.
+
+## Docs
+
+- [README](https://github.com/nirholas/mcp-policy/blob/main/README.md): install, configuration, full reference
+- [Documentation site](https://nirholas.github.io/mcp-policy/): the README as a web page
+- [Full text for LLMs](https://nirholas.github.io/mcp-policy/llms-full.txt): README inlined
+- [AGENTS.md](https://github.com/nirholas/mcp-policy/blob/main/AGENTS.md): guidance for coding agents
+
+## Project
+
+- [Source](https://github.com/nirholas/mcp-policy)
+- [npm](https://www.npmjs.com/package/@three-ws/mcp-policy)
+- [three.ws](https://three.ws): the platform this is part of
+- [Issues](https://github.com/nirholas/mcp-policy/issues)

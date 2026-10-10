@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>@three-ws/mcp-policy: The three.ws MCP tool policy</title>
+<meta name="description" content="The three.ws MCP tool policy: every tool&#39;s group and tier, read-only by default with opt-in financial groups, named confirm flags, and preview ids that must precede every irreversible call.">
+<link rel="canonical" href="https://nirholas.github.io/mcp-policy/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="three.ws">
+<meta property="og:title" content="@three-ws/mcp-policy">
+<meta property="og:description" content="The three.ws MCP tool policy: every tool&#39;s group and tier, read-only by default with opt-in financial groups, named confirm flags, and preview ids that must precede every irreversible call.">
+<meta property="og:url" content="https://nirholas.github.io/mcp-policy/">
+<meta property="og:image" content="https://nirholas.github.io/mcp-policy/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="@three-ws/mcp-policy">
+<meta name="twitter:description" content="The three.ws MCP tool policy: every tool&#39;s group and tier, read-only by default with opt-in financial groups, named confirm flags, and preview ids that must precede every irreversible call.">
+<meta name="twitter:image" content="https://nirholas.github.io/mcp-policy/og.png">
+<meta name="keywords" content="mcp, model-context-protocol, three.ws, tool-policy, agent-safety, solana, ai-agents">
+<link rel="alternate" type="text/plain" href="llms.txt" title="llms.txt">
+<link rel="icon" href="https://three.ws/three-ws-mcp-icon.svg" type="image/svg+xml">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"@three-ws/mcp-policy","description":"The three.ws MCP tool policy: every tool's group and tier, read-only by default with opt-in financial groups, named confirm flags, and preview ids that must precede every irreversible call.","codeRepository":"https://github.com/nirholas/mcp-policy","programmingLanguage":"JavaScript","license":"https://spdx.org/licenses/Apache-2.0.html","version":"0.1.0","url":"https://nirholas.github.io/mcp-policy/","author":{"@type":"Organization","name":"three.ws","url":"https://three.ws"},"keywords":"mcp, model-context-protocol, three.ws, tool-policy, agent-safety, solana, ai-agents"}</script>
+<style>:root{--bg:#fff;--fg:#111418;--mut:#586069;--line:#e3e6ea;--acc:#2563eb;--code:#f4f6f8;--card:#fafbfc}
+@media(prefers-color-scheme:dark){:root{--bg:#0b0d10;--fg:#e8eaed;--mut:#9aa3ad;--line:#232830;--acc:#6ea0ff;--code:#14181d;--card:#10141a}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+a{color:var(--acc)}a:focus-visible,button:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:4px}
+header.bar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-weight:700;text-decoration:none;color:var(--fg)}
+.bar nav{margin-left:auto;display:flex;gap:16px;font-size:14px}
+.bar nav a{color:var(--mut);text-decoration:none;transition:color .15s}.bar nav a:hover{color:var(--fg)}
+.hero{max-width:1100px;margin:0 auto;padding:48px 16px 24px}
+.hero h1{font-size:clamp(28px,5vw,44px);line-height:1.15;margin:0 0 12px;letter-spacing:-.02em}
+.hero p{color:var(--mut);max-width:70ch;font-size:18px;margin:0 0 24px}
+.install{display:flex;align-items:center;gap:8px;max-width:620px;background:var(--code);border:1px solid var(--line);border-radius:10px;padding:6px 6px 6px 14px}
+.install code{flex:1;overflow-x:auto;white-space:nowrap;font:14px ui-monospace,SFMono-Regular,Menlo,monospace}
+.install button{border:0;background:var(--acc);color:#fff;border-radius:7px;padding:8px 14px;font:600 13px system-ui;cursor:pointer;transition:transform .12s,opacity .12s}
+.install button:hover{opacity:.9}.install button:active{transform:scale(.96)}
+.cta{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.cta a{padding:9px 16px;border:1px solid var(--line);border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;color:var(--fg);transition:border-color .15s,transform .15s}
+.cta a:hover{border-color:var(--acc);transform:translateY(-1px)}.cta a.pri{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.layout{max-width:1100px;margin:0 auto;padding:8px 16px 64px;display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:40px}
+@media(max-width:860px){.layout{grid-template-columns:minmax(0,1fr)}.toc{display:none}}
+.toc{position:sticky;top:76px;align-self:start;font-size:14px;border-left:1px solid var(--line);padding-left:16px}
+.toc p{margin:0 0 8px;font-weight:700;color:var(--mut);text-transform:uppercase;font-size:12px;letter-spacing:.06em}
+.toc ul{list-style:none;margin:0;padding:0}.toc li{margin:6px 0}.toc a{color:var(--mut);text-decoration:none}.toc a:hover{color:var(--fg)}
+main{min-width:0;overflow-wrap:anywhere}main pre code{overflow-wrap:normal}main img{max-width:100%;height:auto}
+main h2{margin-top:2.2em;padding-bottom:.3em;border-bottom:1px solid var(--line)}
+.anchor{margin-left:-1.1em;padding-right:.4em;text-decoration:none;opacity:0;color:var(--mut)}h2:hover .anchor,h3:hover .anchor,h4:hover .anchor{opacity:1}
+pre{background:var(--code);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;font-size:14px;line-height:1.5}
+code{font:0.9em ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--code);padding:.15em .35em;border-radius:5px}pre code{background:none;padding:0}
+table{border-collapse:collapse;display:block;overflow-x:auto;max-width:100%}th,td{border:1px solid var(--line);padding:8px 12px;text-align:left}th{background:var(--card)}
+blockquote{margin:1em 0;padding:.2em 1em;border-left:4px solid var(--line);color:var(--mut)}
+footer{border-top:1px solid var(--line);color:var(--mut);font-size:14px}
+.foot-in{max-width:1100px;margin:0 auto;padding:24px 16px;display:flex;gap:16px;flex-wrap:wrap}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}</style>
+</head>
+<body>
+<header class="bar"><div class="bar-in">
+<a class="brand" href="https://nirholas.github.io/mcp-policy/">@three-ws/mcp-policy</a>
+<nav aria-label="Project links"><a href="https://github.com/nirholas/mcp-policy">GitHub</a><a href="https://www.npmjs.com/package/@three-ws/mcp-policy">npm</a><a href="llms.txt">llms.txt</a><a href="https://three.ws">three.ws</a></nav>
+</div></header>
+<section class="hero">
+<h1>@three-ws/mcp-policy</h1>
+<p>The three.ws MCP tool policy: every tool&#39;s group and tier, read-only by default with opt-in financial groups, named confirm flags, and preview ids that must precede every irreversible call.</p>
+<div class="install" role="group" aria-label="Install command"><code>npm install @three-ws/mcp-policy</code><button type="button" data-copy="npm install @three-ws/mcp-policy">Copy</button></div>
+<div class="cta"><a class="pri" href="https://github.com/nirholas/mcp-policy">View on GitHub</a><a href="https://github.com/nirholas/mcp-policy/stargazers">Star the repo</a></div>
+</section>
+<div class="layout">
+<main id="content"><h1>@three-ws/mcp-policy</h1>
+<p><strong>One tool policy for every three.ws MCP server: read-only by default, money behind a named confirm flag and a fresh preview.</strong></p>
+<p>Every tool on every three.ws MCP server, hosted or stdio, is classified here by
+<strong>group</strong> (what it is about) and <strong>tier</strong> (what it can do to the caller). A
+session sees the read and write tiers by default. Financial tools, the ones that
+move funds or cannot be undone, stay hidden until the person opts in, and even
+then each call must carry a named confirm flag (<code>confirm_payment: true</code>,
+<code>confirm_swap: true</code>, ...) plus a preview id issued by the matching preview tool
+within the last ten minutes, bound to the same arguments.</p>
+<p>The hosted servers (through <a href="https://github.com/nirholas/mcp-policy/blob/main/./../api/_mcp/policy.js">api/_mcp/policy.js</a>),
+the <a href="https://github.com/nirholas/mcp-policy/blob/main/./../api/mcp-policy.js">/api/mcp-policy</a> allowlist builder, and the stdio
+packages all read the same table, so a rule changes in one place.</p>
+<h2 id="install"><a class="anchor" href="#install" aria-label="Link to this section">#</a>Install</h2>
+<p>The package is a workspace of this monorepo (<code>packages/mcp-policy</code>) and is not
+on the npm registry yet. A root <code>npm install</code> links it, after which
+<code>import &#39;@three-ws/mcp-policy&#39;</code> resolves from any file in the repo:</p>
+<pre><code class="language-bash">npm install
+node -e &quot;import(&#39;@three-ws/mcp-policy&#39;).then((p) =&gt; console.log(Object.keys(p.POLICY).length, &#39;servers&#39;))&quot;
+</code></pre>
+<p>Zero runtime dependencies. Node 20+. ESM only. Its <code>package.json</code> is already
+set for a public release (<code>publishConfig.access: public</code>, <code>files: src, README.md, LICENSE</code>), so publishing is <code>npm publish -w packages/mcp-policy</code>, an
+owner-approved step.</p>
+<h2 id="the-model"><a class="anchor" href="#the-model" aria-label="Link to this section">#</a>The model</h2>
+<h3 id="tiers"><a class="anchor" href="#tiers" aria-label="Link to this section">#</a>Tiers</h3>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Meaning</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>read</code></td>
+<td>Changes nothing.</td>
+<td>on</td>
+</tr>
+<tr>
+<td><code>write</code></td>
+<td>Changes account state, and a follow-up call can undo it.</td>
+<td>on</td>
+</tr>
+<tr>
+<td><code>financial</code></td>
+<td>Moves funds or cannot be undone.</td>
+<td>off; every call needs its confirm flag and a fresh preview id</td>
+</tr>
+</tbody></table>
+<h3 id="groups"><a class="anchor" href="#groups" aria-label="Link to this section">#</a>Groups</h3>
+<p><code>agents</code>, <code>chat</code>, <code>runs</code>, <code>skills</code>, <code>trading</code>, <code>orders</code>, <code>perps</code>, <code>lending</code>,
+<code>predictions</code>, <code>launch</code>, <code>marketplace</code>, <code>cards</code>, <code>mail</code>, <code>x402</code>, <code>wallet</code>,
+<code>billing</code>, <code>intelligence</code>, <code>integrations</code>, <code>account</code>, <code>allowlist</code>, <code>assets</code>,
+<code>gateway</code>, <code>sandbox</code>, <code>utility</code>. Each has a label and a one-line summary in
+<code>GROUPS</code> (exported), written for the person deciding whether to turn it on.</p>
+<h3 id="financial-tools"><a class="anchor" href="#financial-tools" aria-label="Link to this section">#</a>Financial tools</h3>
+<p>A financial row names three things:</p>
+<ul>
+<li><strong>the confirm flag</strong> the call must set to literally <code>true</code> (one of
+<code>CONFIRM_FLAGS</code>, e.g. <code>confirm_transfer</code>, <code>confirm_payment</code>, <code>confirm_run</code>);</li>
+<li><strong>the preview tool</strong> that must run first (e.g. <code>inspect_endpoint</code> before
+<code>pay_and_call</code>);</li>
+<li><strong>the bound arguments</strong> that must be identical between preview and call, so a
+quote for one destination can never authorize a payment to another.</li>
+</ul>
+<p>The preview id is <code>quote_id</code> when the preview tool is a quote, <code>preview_id</code>
+otherwise. It lives for <code>PREVIEW_TTL_MS</code> (10 minutes), belongs to the caller who
+previewed, and is burned the moment the financial call it authorized succeeds.</p>
+<p>A tool with <strong>no</strong> row in the table is treated as financial with no group: it is
+hidden unless named explicitly, so an unclassified tool can never slip into a
+default session.</p>
+<h3 id="the-spec-grammar"><a class="anchor" href="#the-spec-grammar" aria-label="Link to this section">#</a>The spec grammar</h3>
+<p>One grammar is read from the <code>X-Three-Tools</code> header, the <code>tools</code> query
+parameter, the <code>THREE_WS_TOOLS</code> env var of a stdio server, and the saved
+settings. Tokens are comma- or space-separated and applied left to right:</p>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>default</code></td>
+<td>read + write on, financial off (the implicit base)</td>
+</tr>
+<tr>
+<td><code>all</code> / <code>none</code> / <code>readonly</code></td>
+<td>every tier / nothing / only read</td>
+</tr>
+<tr>
+<td><code>financial</code>, <code>-write</code></td>
+<td>turn a tier on or off</td>
+</tr>
+<tr>
+<td><code>trading</code>, <code>-chat</code></td>
+<td>turn a whole group on (every tier) or off</td>
+</tr>
+<tr>
+<td><code>swap_execute</code>, <code>-forget</code></td>
+<td>turn one tool on or off</td>
+</tr>
+</tbody></table>
+<p>Precedence is tool over group over tier: <code>-trading,swap_quote</code> hides the trading
+group except <code>swap_quote</code>. A spec made only of plain tool names is an <strong>exact
+allow list</strong>; to add a tool to the defaults instead, lead with a base:
+<code>default,pay_and_call</code>.</p>
+<p>Hosted servers resolve a session in this order, first present wins: the client&#39;s
+<code>X-Three-Allowed-Tools</code> list, <code>X-Three-Tools</code>, the <code>tools</code> query parameter, the
+per-key setting layered over the account setting, then the default. A stdio
+process resolves <code>THREE_WS_ALLOWED_TOOLS</code>, then <code>THREE_WS_TOOLS</code>, then the
+selection <code>npx three-ws tools</code> saved under <code>tools[&quot;three-ws-&lt;name&gt;&quot;]</code> in
+<code>~/.config/three-ws/credentials.json</code>, then the default.</p>
+<h2 id="quick-start"><a class="anchor" href="#quick-start" aria-label="Link to this section">#</a>Quick start</h2>
+<p>The full preview, confirm, burn cycle against the real <code>x402-mcp</code> table:</p>
+<pre><code class="language-js">import { createPolicy, enablementFromSpec, describeEnablement } from &#39;@three-ws/mcp-policy&#39;;
+
+const policy = createPolicy({ serverId: &#39;x402-mcp&#39; });
+const en = enablementFromSpec(&#39;default,x402&#39;, &#39;example&#39;); // the whole x402 group, financial tier included
+console.log(describeEnablement(en));
+
+const call = { url: &#39;https://three.ws/api/x402/example&#39;, method: &#39;GET&#39; };
+
+// 1. A financial call with no confirm flag is refused with a tool result the model can read.
+const refused = await policy.beforeCall({ name: &#39;pay_and_call&#39;, args: call, en, principal: &#39;me&#39; });
+console.log(refused.ok, refused.result.structuredContent.reason); // false confirmation_required
+
+// 2. The preview tool runs; afterCall stamps a preview id onto its result.
+const preview = await policy.afterCall({
+	name: &#39;inspect_endpoint&#39;,
+	args: call,
+	principal: &#39;me&#39;,
+	result: { content: [{ type: &#39;text&#39;, text: &#39;price: $0.01 per call&#39; }] },
+});
+const previewId = preview._meta[&#39;three.ws/preview&#39;].preview_id;
+
+// 3. The confirmed call with the fresh preview id passes, policy-only arguments stripped.
+const gate = await policy.beforeCall({
+	name: &#39;pay_and_call&#39;,
+	args: { ...call, preview_id: previewId, confirm_payment: true },
+	en,
+	principal: &#39;me&#39;,
+});
+console.log(gate.ok, gate.args); // true { url: ..., method: &#39;GET&#39; }
+
+// 4. After it succeeds the preview id is burned, so it can never authorize a second payment.
+await policy.afterCall({ name: &#39;pay_and_call&#39;, args: call, principal: &#39;me&#39;, result: { content: [] }, preview: gate.preview });
+const replay = await policy.beforeCall({ name: &#39;pay_and_call&#39;, args: { ...call, preview_id: previewId, confirm_payment: true }, en, principal: &#39;me&#39; });
+console.log(replay.ok, replay.result.structuredContent.reason); // false preview_unknown
+</code></pre>
+<p>Refusals are MCP tool results with <code>isError: true</code> and a <code>structuredContent</code>
+reason (<code>tool_disabled</code>, <code>confirmation_required</code>, <code>preview_required</code>,
+<code>preview_unknown</code>, <code>preview_stale</code>, <code>preview_mismatch</code>), never JSON-RPC errors:
+a model reads a tool result and acts on it, while most clients show a protocol
+error only to the person.</p>
+<h2 id="wiring-a-stdio-server"><a class="anchor" href="#wiring-a-stdio-server" aria-label="Link to this section">#</a>Wiring a stdio server</h2>
+<h3 id="high-level-mcpserver"><a class="anchor" href="#high-level-mcpserver" aria-label="Link to this section">#</a>High-level <code>McpServer</code></h3>
+<p>Call <code>applyPolicy</code> before the <code>registerTool</code> loop. It wraps <code>registerTool</code>, so a
+disabled tool is never registered (calling it anyway explains how to turn it
+on), a financial tool gains its confirm flag and preview-id arguments in its zod
+schema, and a preview tool stamps a preview id onto its result.</p>
+<pre><code class="language-js">import { McpServer } from &#39;@modelcontextprotocol/sdk/server/mcp.js&#39;;
+import { StdioServerTransport } from &#39;@modelcontextprotocol/sdk/server/stdio.js&#39;;
+import { z } from &#39;zod&#39;;
+import { applyPolicy } from &#39;@three-ws/mcp-policy/stdio&#39;;
+
+const server = new McpServer({ name: &#39;x402-mcp&#39;, version: &#39;1.0.0&#39; });
+const { enablement, hidden } = applyPolicy(server, { serverId: &#39;x402-mcp&#39;, z });
+
+server.registerTool(
+	&#39;inspect_endpoint&#39;,
+	{ description: &#39;Price an x402 endpoint without paying.&#39;, inputSchema: { url: z.string().url(), method: z.string().default(&#39;GET&#39;) } },
+	async ({ url, method }) =&gt; ({ content: [{ type: &#39;text&#39;, text: `${method} ${url}: $0.01 per call` }] }),
+);
+server.registerTool(
+	&#39;pay_and_call&#39;,
+	{ description: &#39;Pay an x402 endpoint and return its response.&#39;, inputSchema: { url: z.string().url(), method: z.string().default(&#39;GET&#39;) } },
+	async ({ url }) =&gt; ({ content: [{ type: &#39;text&#39;, text: `paid ${url}` }] }),
+);
+
+console.error(`policy source: ${enablement.source}; hidden: ${[...hidden].join(&#39;, &#39;) || &#39;none&#39;}`);
+if (process.argv.includes(&#39;--serve&#39;)) await server.connect(new StdioServerTransport());
+</code></pre>
+<p>Run it bare and it prints <code>policy source: default; hidden: pay_and_call</code>. Run it
+with <code>THREE_WS_TOOLS=default,x402</code> and it prints <code>policy source: env; hidden: none</code>.
+Pass the package&#39;s own <code>z</code> so the added arguments match its zod version.</p>
+<h3 id="low-level-server-with-json-schema-tools"><a class="anchor" href="#low-level-server-with-json-schema-tools" aria-label="Link to this section">#</a>Low-level <code>Server</code> with JSON-Schema tools</h3>
+<pre><code class="language-js">import { createStdioPolicy } from &#39;@three-ws/mcp-policy/stdio&#39;;
+
+const gate = createStdioPolicy(&#39;x402-mcp&#39;);
+// ListTools handler:  return { tools: gate.listTools(TOOLS) };
+// CallTool handler:   return gate.callTool(name, args, (cleanArgs) =&gt; runTool(name, cleanArgs));
+</code></pre>
+<p><code>listTools</code> drops disabled tools, appends the financial rule to each financial
+tool&#39;s description, adds the confirm and preview arguments to its schema, and
+stamps <code>_meta[&#39;three.ws/policy&#39;]</code> (group, tier, confirm flag, preview tool,
+preview argument) on every tool.</p>
+<h2 id="api"><a class="anchor" href="#api" aria-label="Link to this section">#</a>API</h2>
+<h3 id="three-wsmcp-policy"><a class="anchor" href="#three-wsmcp-policy" aria-label="Link to this section">#</a><code>@three-ws/mcp-policy</code></h3>
+<table>
+<thead>
+<tr>
+<th>Export</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>GROUPS</code>, <code>GROUP_IDS</code></td>
+<td>Every group <code>{ id, label, summary }</code>, in settings-page order, and just the ids.</td>
+</tr>
+<tr>
+<td><code>TIERS</code>, <code>DEFAULT_TIERS</code></td>
+<td><code>[&#39;read&#39;, &#39;write&#39;, &#39;financial&#39;]</code> and the tiers a fresh key sees (<code>[&#39;read&#39;, &#39;write&#39;]</code>).</td>
+</tr>
+<tr>
+<td><code>CONFIRM_FLAGS</code>, <code>PREVIEW_ARGS</code>, <code>PREVIEW_TTL_MS</code></td>
+<td>The confirm flag vocabulary, <code>[&#39;quote_id&#39;, &#39;preview_id&#39;]</code>, and the 10-minute preview lifetime.</td>
+</tr>
+<tr>
+<td><code>POLICY</code></td>
+<td>The table: <code>{ [serverId]: { [toolName]: { group, tier, confirmFlag?, previewTool?, bind?, ownsPreview? } } }</code>. The single source of truth.</td>
+</tr>
+<tr>
+<td><code>SERVERS</code></td>
+<td>Human names, endpoints and transport (<code>remote</code> or <code>stdio</code>) for every server id in <code>POLICY</code>.</td>
+</tr>
+<tr>
+<td><code>createPolicy({ serverId, table?, store?, settingsUrl?, now? })</code></td>
+<td>The runtime for one server: <code>listTools(tools, en)</code>, <code>beforeCall({ name, args, en, principal, ownArgs })</code>, <code>afterCall({ name, args, principal, result, preview })</code>, <code>enabled(name, en)</code>, <code>entry(name)</code>, <code>disabledResult</code>, <code>policyMeta</code>, <code>financialNote</code>. Throws when <code>serverId</code> has no table.</td>
+</tr>
+<tr>
+<td><code>createMemoryPreviewStore()</code></td>
+<td>An in-process <code>{ put, get, del }</code> preview store, right for a single stdio process. The hosted servers pass a Redis-backed store instead so a quote issued on one instance is honored on another.</td>
+</tr>
+<tr>
+<td><code>normalizeEntry(name, row)</code></td>
+<td>Expand a terse table row into the shape every consumer reads.</td>
+</tr>
+<tr>
+<td><code>parseSpec(spec)</code></td>
+<td>Spec string or array to <code>{ tokens, invalid }</code>; a typo lands in <code>invalid</code> instead of being silently dropped.</td>
+</tr>
+<tr>
+<td><code>enablementFromSpec(spec, source)</code></td>
+<td>A spec to an enablement, honoring the exact-allow-list rule.</td>
+</tr>
+<tr>
+<td><code>enablementFromTokens(tokens, source)</code>, <code>defaultEnablement()</code>, <code>allowListEnablement(names, source?)</code></td>
+<td>Build an enablement directly.</td>
+</tr>
+<tr>
+<td><code>settingsToTokens(settings)</code></td>
+<td>Saved <code>{ groups: { id: bool }, tools: { name: bool } }</code> settings to tokens; unknown groups are dropped.</td>
+</tr>
+<tr>
+<td><code>resolveEnablement({ allowedTools, headerSpec, querySpec, keySettings, accountSettings })</code></td>
+<td>The hosted resolution order above, in one call.</td>
+</tr>
+<tr>
+<td><code>enablementFromSelection(sel, source?)</code>, <code>selectionToTokens(sel)</code>, <code>specFromSelection(sel)</code></td>
+<td>Convert a <code>three-ws tools</code> selection (<code>{ tiers, allow, deny }</code>) to an enablement, tokens, or an <code>X-Three-Tools</code> spec.</td>
+</tr>
+<tr>
+<td><code>isToolEnabled(name, entry, en)</code></td>
+<td>Is this tool on for the session.</td>
+</tr>
+<tr>
+<td><code>describeEnablement(en)</code></td>
+<td>A compact, serializable view for logs and the settings API.</td>
+</tr>
+<tr>
+<td><code>SETTINGS_URL</code>, <code>CLI_COMMAND</code></td>
+<td><code>https://three.ws/settings/mcp-tools</code> and <code>npx three-ws tools</code>, quoted in every refusal.</td>
+</tr>
+</tbody></table>
+<h3 id="three-wsmcp-policystdio"><a class="anchor" href="#three-wsmcp-policystdio" aria-label="Link to this section">#</a><code>@three-ws/mcp-policy/stdio</code></h3>
+<table>
+<thead>
+<tr>
+<th>Export</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>applyPolicy(server, { serverId, z, env?, enablement?, store? })</code></td>
+<td>Put the policy in front of every tool an <code>McpServer</code> registers from now on. Returns <code>{ policy, enablement, hidden }</code>.</td>
+</tr>
+<tr>
+<td><code>createStdioPolicy(serverId, { env?, enablement?, store? })</code></td>
+<td>The same policy for a low-level <code>Server</code>: <code>{ policy, enablement, listTools(tools), callTool(name, args, run, ownArgs?) }</code>.</td>
+</tr>
+<tr>
+<td><code>resolveStdioEnablement(serverId, env?)</code></td>
+<td>The stdio resolution order above.</td>
+</tr>
+<tr>
+<td><code>cliSlug(serverId)</code></td>
+<td>The CLI&#39;s config key for a package: <code>x402-mcp</code> becomes <code>three-ws-x402</code>.</td>
+</tr>
+</tbody></table>
+<h2 id="adding-a-tool"><a class="anchor" href="#adding-a-tool" aria-label="Link to this section">#</a>Adding a tool</h2>
+<p>Add a row for it under its server in <a href="https://github.com/nirholas/mcp-policy/blob/main/src/table.js">src/table.js</a> with the row
+helpers at the top of the file: <code>r(group)</code>, <code>w(group)</code>,
+<code>f(group, flag, previewTool, bind)</code>, or <code>own(group, flag, previewTool)</code> for a
+tool that verifies its own preview id. A financial tool must name the preview
+tool a person sees before it runs. The audit that checks each tool&#39;s annotations
+against its handler is <code>npm run audit:mcp-safety</code>
+(<a href="https://github.com/nirholas/mcp-policy/blob/main/./../docs/mcp-safety.md">docs/mcp-safety.md</a>).</p>
+<h2 id="related"><a class="anchor" href="#related" aria-label="Link to this section">#</a>Related</h2>
+<ul>
+<li><a href="https://github.com/nirholas/mcp-policy/blob/main/./../docs/mcp.md">docs/mcp.md</a>: every three.ws MCP server.</li>
+<li><a href="https://three.ws/mcp-tools">/mcp-tools</a>: the searchable tool index and the allowlist builder.</li>
+<li><a href="https://github.com/nirholas/mcp-policy/blob/main/./three-ws-cli">packages/three-ws-cli</a>: <code>npx three-ws tools</code> writes the stdio selection this package reads.</li>
+</ul>
+<h2 id="license"><a class="anchor" href="#license" aria-label="Link to this section">#</a>License</h2>
+<p>Apache-2.0. See <a href="https://github.com/nirholas/mcp-policy/blob/main/LICENSE">LICENSE</a>.</p>
+</main>
+<nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#install">Install</a></li><li><a href="#the-model">The model</a></li><li><a href="#quick-start">Quick start</a></li><li><a href="#wiring-a-stdio-server">Wiring a stdio server</a></li><li><a href="#api">API</a></li><li><a href="#adding-a-tool">Adding a tool</a></li><li><a href="#related">Related</a></li><li><a href="#license">License</a></li></ul></nav>
+</div>
+<footer><div class="foot-in"><span>Apache-2.0 licensed</span><a href="https://github.com/nirholas/mcp-policy/issues">Issues</a><a href="https://github.com/nirholas/mcp-policy/blob/main/CONTRIBUTING.md">Contributing</a><a href="https://github.com/nirholas/mcp-policy/security/policy">Security</a><a href="https://three.ws">Part of three.ws</a></div></footer>
+<script>document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){
+var t=b.getAttribute('data-copy');var done=function(){var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o},1400)};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,function(){})}
+else{var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');done()}catch(e){}a.remove()}})});</script>
+</body>
+</html>
